@@ -30,5 +30,10 @@
     "web": {
       "favicon": "./assets/images/favicon.png"
     }
+  },
+  "api":{
+    "setting":"https://cllqtv-bn-dev-api.azurewebsites.net/api/inventory/settings",
+    "appBook": "https://cllqtv-bn-dev-api.azurewebsites.net/api/inventory/locations/SelfScan/settings",
+    "language": "https://stcllqtvbndev.blob.core.windows.net/translation/consumer/en/translations.json"
   }
 }

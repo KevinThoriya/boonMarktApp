@@ -2,10 +2,13 @@ import { Dimensions, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Text, View } from "../components/Themed";
 
 import ListScanCode from "../components/ListScanCode";
+import { useTranslate } from "../Store";
 
 const { height, width } = Dimensions.get("window");
 
 export default function ScanListScreen() {
+
+  const translate = useTranslate();
   return (
     <View style={styles.container}>
       <Image
@@ -24,7 +27,7 @@ export default function ScanListScreen() {
               source={require("../assets/images/wallet.png")}
             />
           </TouchableOpacity>
-          <Text style={styles.selfScanText}>self Scan</Text>
+          <Text style={styles.selfScanText}>{translate.s_selfscan}</Text>
           <TouchableOpacity style={styles.iconBtn}>
             <Image
               style={styles.iconImage}

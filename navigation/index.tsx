@@ -42,8 +42,8 @@ function RootNavigator() {
   return (
     <Stack.Navigator>
       {/* <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} /> */}
-      <Stack.Screen name="ScanList" component={ScanListScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="ScanList" component={ScanListScreen} options={{ headerShown: false }} />
       {/* <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
       </Stack.Group> */}
