@@ -32,7 +32,7 @@ const SlideMenu = ({ navigation }: DrawerContentComponentProps) => {
             const itemMarginTop = key > 0 ? 24 : 0;
 
             return (
-              <TouchableOpacity onPress={props.onPress}>
+              <TouchableOpacity key={props.label} onPress={props.onPress}>
                 <Text style={styles.Label}>{props.label}</Text>
               </TouchableOpacity>
             );

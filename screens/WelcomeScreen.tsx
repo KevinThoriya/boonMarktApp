@@ -1,12 +1,15 @@
+import * as SplashScreen from 'expo-splash-screen';
+
 import { Dimensions, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Text, View } from "../components/Themed";
 import { useAppDispatch, useAppSelector } from "../Store";
+import { useCallback, useEffect, useState } from "react";
 
+import { Spinner } from 'native-base';
 import { api } from "../app.json";
 import { storeAppBook } from "../Store/appbookSlice";
 import { storeLanguage } from "../Store/translateSlice";
 import { storeSetting } from "../Store/settingSlice";
-import { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 const { height, width } = Dimensions.get("window");
@@ -16,6 +19,8 @@ export default function WelcomeScreen() {
   const dispatch = useAppDispatch();
 
   const translate = useAppSelector((state) => state.translate);
+
+  const [appIsReady, setAppIsReady] = useState({ready: false, error:false});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,13 +43,30 @@ export default function WelcomeScreen() {
         });
         const { translation: LanguageJson } = await LanguageResponse.json();
         dispatch({ type: storeLanguage.type, payload: LanguageJson });
+        setAppIsReady({ready: true, error: false});
       } catch (error) {
         console.error(error);
+        setAppIsReady({ready: true, error: true});
       }
     };
 
     fetchData();
   }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady.ready) {
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady.ready]);
+
+  if (!appIsReady.ready || !translate) {
+    return <View style={[styles.container,{justifyContent:'center'}]}>
+    <Image
+      style={styles.background}
+      source={require("../assets/images/background.png")}
+    />      
+    </View>;
+  } 
 
   return (
     <View style={styles.container}>
@@ -59,12 +81,14 @@ export default function WelcomeScreen() {
         />
         <Text style={styles.welcomeText}>{translate.s_welcome}</Text>
         <View style={styles.divider} />
-        <TouchableOpacity
+        {!appIsReady.error ? <TouchableOpacity
           onPress={() => navigate("ScanList")}
           style={styles.scanBtn}
         >
           <Text style={styles.scanText}>{translate.s_scan_store_qr_code}</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>:
+          <Text style={styles.scanText}>Server is not responding, please check internet</Text>
+        }
       </View>
     </View>
   );
