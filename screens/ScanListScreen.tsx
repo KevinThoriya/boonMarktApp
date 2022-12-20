@@ -1,7 +1,10 @@
 import { Dimensions, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Text, View } from "../components/Themed";
 
+import { DrawerNavigationProp } from "@react-navigation/drawer";
+import { DrawerParamList } from "../types";
 import ListScanCode from "../components/ListScanCode";
+import { useNavigation } from "@react-navigation/native";
 import { useTranslate } from "../Store";
 
 const { height, width } = Dimensions.get("window");
@@ -9,6 +12,10 @@ const { height, width } = Dimensions.get("window");
 export default function ScanListScreen() {
 
   const translate = useTranslate();
+  const navigation = useNavigation<DrawerNavigationProp<DrawerParamList>>();
+  
+  
+  
   return (
     <View style={styles.container}>
       <Image
@@ -21,7 +28,7 @@ export default function ScanListScreen() {
           source={require("../assets/images/icon.png")}
         />
         <View style={styles.topHeaderContainer}>
-          <TouchableOpacity style={styles.iconBtn}>
+          <TouchableOpacity style={styles.iconBtn} onPress={() => navigation.openDrawer()}>
             <Image
               style={styles.iconImage}
               source={require("../assets/images/wallet.png")}

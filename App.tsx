@@ -1,3 +1,5 @@
+import 'react-native-gesture-handler';
+
 import { NativeBaseProvider } from "native-base";
 import Navigation from "./navigation";
 import { Provider } from "react-redux";
