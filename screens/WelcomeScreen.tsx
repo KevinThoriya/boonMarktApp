@@ -1,16 +1,16 @@
-import * as SplashScreen from 'expo-splash-screen';
+import * as SplashScreen from "expo-splash-screen";
 
 import { Dimensions, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Text, View } from "../components/Themed";
 import { useAppDispatch, useAppSelector } from "../Store";
 import { useCallback, useEffect, useState } from "react";
 
-import { Spinner } from 'native-base';
+import { Spinner } from "native-base";
 import { api } from "../app.json";
 import { storeAppBook } from "../Store/appbookSlice";
 import { storeLanguage } from "../Store/translateSlice";
 import { storeSetting } from "../Store/settingSlice";
-import { useFonts } from 'expo-font';
+import { useFonts } from "expo-font";
 import { useNavigation } from "@react-navigation/native";
 
 const { height, width } = Dimensions.get("window");
@@ -18,14 +18,14 @@ export default function WelcomeScreen() {
   const { navigate } = useNavigation();
 
   const [fontsLoaded] = useFonts({
-    'PlusJakartaSans': require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
+    PlusJakartaSans: require("../assets/fonts/PlusJakartaSans-Regular.ttf"),
   });
 
   const dispatch = useAppDispatch();
 
   const translate = useAppSelector((state) => state.translate);
 
-  const [appIsReady, setAppIsReady] = useState({ready: false, error:false});
+  const [appIsReady, setAppIsReady] = useState({ ready: false, error: false });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,10 +48,10 @@ export default function WelcomeScreen() {
         });
         const { translation: LanguageJson } = await LanguageResponse.json();
         dispatch({ type: storeLanguage.type, payload: LanguageJson });
-        setAppIsReady({ready: true, error: false});
+        setAppIsReady({ ready: true, error: false });
       } catch (error) {
         console.error(error);
-        setAppIsReady({ready: true, error: true});
+        setAppIsReady({ ready: true, error: true });
       }
     };
 
@@ -65,13 +65,15 @@ export default function WelcomeScreen() {
   }, [appIsReady.ready, fontsLoaded]);
 
   if (!appIsReady.ready || !translate) {
-    return <View style={[styles.container,{justifyContent:'center'}]}>
-    <Image
-      style={styles.background}
-      source={require("../assets/images/background.png")}
-    />      
-    </View>;
-  } 
+    return (
+      <View style={[styles.container, { justifyContent: "center" }]}>
+        <Image
+          style={styles.background}
+          source={require("../assets/images/background.png")}
+        />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
@@ -86,14 +88,20 @@ export default function WelcomeScreen() {
         />
         <Text style={styles.welcomeText}>{translate.s_welcome}</Text>
         <View style={styles.divider} />
-        {!appIsReady.error ? <TouchableOpacity
-          onPress={() => navigate("ScanList")}
-          style={styles.scanBtn}
-        >
-          <Text style={styles.scanText}>{translate.s_scan_store_qr_code}</Text>
-        </TouchableOpacity>:
-          <Text style={styles.scanText}>Server is not responding, please check internet</Text>
-        }
+        {!appIsReady.error ? (
+          <TouchableOpacity
+            onPress={() => navigate("ScanList")}
+            style={styles.scanBtn}
+          >
+            <Text style={styles.scanText}>
+              {translate.s_scan_store_qr_code}
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <Text style={[styles.scanText, { color: "#000" }]}>
+            Server is not responding, please check internet
+          </Text>
+        )}
       </View>
     </View>
   );
@@ -132,7 +140,7 @@ const styles = StyleSheet.create({
   welcomeText: {
     color: "#000",
     fontSize: 22,
-    fontFamily: "PlusJakartaSans"
+    fontFamily: "PlusJakartaSans",
   },
   divider: {
     height: 1.5,
@@ -156,6 +164,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     textTransform: "uppercase",
     fontSize: 14,
-    fontFamily: "PlusJakartaSans"
+    fontFamily: "PlusJakartaSans",
   },
 });

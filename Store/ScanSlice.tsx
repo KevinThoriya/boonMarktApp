@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface State {
-  count: number;
+  transaction_id: number;
+  loading: boolean;
+  error: boolean;
+  scanList: any[];
 }
 
 interface Action {
@@ -10,16 +13,22 @@ interface Action {
 }
 
 const initialState: State = {
-  count: 0,
+  transaction_id: 0,
+  loading: false,
+  error: false,
+  scanList: [],
 };
 
 const actions = {
-  loading: (state: State, action: Action) => {
-    return {...state, count: action.payload?.count};
+  loadingScan: (state: State, action: Action) => {
+    return {...state, loading: true, error: false};
   },
-  success: (state: State, action: Action) => {
-    return state;
+  successScan: (state: State, action: Action) => {
+    return {...state, ...action.payload, error: false, loading: false};
   },
+  failureScan: (state: State, action:Action) => {
+    return {...state, error: true, loading: false};
+  }
 };
 
 const counter = createSlice({
@@ -28,5 +37,5 @@ const counter = createSlice({
   reducers: actions,
 });
 
-export const { loading, success } = counter.actions;
+export const { loadingScan, successScan, failureScan } = counter.actions;
 export default counter.reducer;

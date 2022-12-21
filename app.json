@@ -43,6 +43,8 @@
     "appBook": "https://cllqtv-bn-dev-api.azurewebsites.net/api/inventory/locations/SelfScan/settings",
     "language": "https://stcllqtvbndev.blob.core.windows.net/translation/consumer/en/translations.json",
     "startScan": "https://cllqtv-bn-dev-api.azurewebsites.net/api/selfscan/cart/start",
-    "getScan": "https://cllqtv-bn-dev-api.azurewebsites.net/api/selfscan/cart"
+    "getScan": "https://cllqtv-bn-dev-api.azurewebsites.net/api/selfscan/cart",
+    "scanApiKey": "fcf15906-9970-45d7-8093-79fcb236b7cc",
+    "external_reference_id": "63173292-abd8-44a0-bc3b-6f7b463d7b04"
   }
 }
