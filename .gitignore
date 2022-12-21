@@ -12,3 +12,8 @@ web-build/
 
 # macOS
 .DS_Store
+output.apks
+./output/*
+output/splits/*
+output/**
+output.zip

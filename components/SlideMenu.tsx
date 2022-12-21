@@ -64,10 +64,13 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     width: '100%',
     marginVertical: 4,
+    marginLeft: 5
   },
   Label:{
     fontSize: 18,
     paddingVertical: 8,
-    
+    fontFamily: "PlusJakartaSans",
+    marginLeft: 15
+
   }
 });

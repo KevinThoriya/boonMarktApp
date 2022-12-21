@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
     color: "#000",
     fontSize: 16,
     marginTop: "15%",
+    fontFamily: "PlusJakartaSans"
   },
   divider: {
     height: 1.5,

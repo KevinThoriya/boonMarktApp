@@ -1,15 +1,16 @@
 {
   "expo": {
-    "name": "Boon-Markt",
+    "jsEngine": "hermes",
+    "name": "Boon Markt",
     "slug": "Boon-Markt",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/s_icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -22,18 +23,26 @@
       "supportsTablet": true
     },
     "android": {
+      "icon": "./assets/images/s_icon.png",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "foregroundImage": "./assets/images/s_icon.png"
+      },
+      "package": "com.boon.markt"
     },
     "web": {
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/s_icon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "4e5caaae-bd10-474e-be69-eae580325f58"
+      }
     }
   },
-  "api":{
-    "setting":"https://cllqtv-bn-dev-api.azurewebsites.net/api/inventory/settings",
+  "api": {
+    "setting": "https://cllqtv-bn-dev-api.azurewebsites.net/api/inventory/settings",
     "appBook": "https://cllqtv-bn-dev-api.azurewebsites.net/api/inventory/locations/SelfScan/settings",
-    "language": "https://stcllqtvbndev.blob.core.windows.net/translation/consumer/en/translations.json"
+    "language": "https://stcllqtvbndev.blob.core.windows.net/translation/consumer/en/translations.json",
+    "startScan": "https://cllqtv-bn-dev-api.azurewebsites.net/api/selfscan/cart/start",
+    "getScan": "https://cllqtv-bn-dev-api.azurewebsites.net/api/selfscan/cart"
   }
 }

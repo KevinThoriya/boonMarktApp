@@ -10,11 +10,16 @@ import { api } from "../app.json";
 import { storeAppBook } from "../Store/appbookSlice";
 import { storeLanguage } from "../Store/translateSlice";
 import { storeSetting } from "../Store/settingSlice";
+import { useFonts } from 'expo-font';
 import { useNavigation } from "@react-navigation/native";
 
 const { height, width } = Dimensions.get("window");
 export default function WelcomeScreen() {
   const { navigate } = useNavigation();
+
+  const [fontsLoaded] = useFonts({
+    'PlusJakartaSans': require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
+  });
 
   const dispatch = useAppDispatch();
 
@@ -54,10 +59,10 @@ export default function WelcomeScreen() {
   }, []);
 
   const onLayoutRootView = useCallback(async () => {
-    if (appIsReady.ready) {
+    if (appIsReady.ready && fontsLoaded) {
       await SplashScreen.hideAsync();
     }
-  }, [appIsReady.ready]);
+  }, [appIsReady.ready, fontsLoaded]);
 
   if (!appIsReady.ready || !translate) {
     return <View style={[styles.container,{justifyContent:'center'}]}>
@@ -69,7 +74,7 @@ export default function WelcomeScreen() {
   } 
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onLayout={onLayoutRootView}>
       <Image
         style={styles.background}
         source={require("../assets/images/background.png")}
@@ -126,7 +131,8 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     color: "#000",
-    fontSize: 28,
+    fontSize: 22,
+    fontFamily: "PlusJakartaSans"
   },
   divider: {
     height: 1.5,
@@ -149,6 +155,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
     textTransform: "uppercase",
-    fontSize: 16,
+    fontSize: 14,
+    fontFamily: "PlusJakartaSans"
   },
 });
