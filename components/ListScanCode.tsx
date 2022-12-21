@@ -80,12 +80,8 @@ export default function ListScanCode({}: ListScanCodeProp) {
     <View style={styles.container}>
       <FlatList
         data={scanList}
-        style={{ width: "100%" }}
-        contentContainerStyle={{
-          flex: 1,
-          flexGrow: 1,
-
-        }}
+        style={{ width: "100%", flex : 1 }}
+        
         onRefresh={fetchData}
         refreshing={scanLoading}
         renderItem={({ item }) => <ScanListItem item={item} />}
@@ -93,20 +89,22 @@ export default function ListScanCode({}: ListScanCodeProp) {
         ListEmptyComponent={
           <Text style={styles.textStyle}>No Items found.</Text>
         }
-        ListFooterComponent={
-          !!scanList?.[0] ? (
-            <View style={{ flex: 1, justifyContent: "flex-end", backgroundColor: '#fff' }}>
-              <ScanListItem item={lastItem} lastItem />
-            </View>
-          ) : undefined
-        }
-        ListFooterComponentStyle={{
-          flexGrow: 1,
-        }}
       />
+      {
+        !!scanList?.[0] ? (
+          <View style={{  justifyContent: "flex-end", backgroundColor: '#fff', width: '100%' }}>
+            <ScanListItem item={lastItem} lastItem />
+          </View>
+        ) : undefined
+      }
     </View>
   );
 }
+
+const formattedAmount = (c:string, a: number) => new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: c,
+}).format(a || 0);
 
 const ScanListItem = ({
   item,
@@ -115,21 +113,20 @@ const ScanListItem = ({
   item: any;
   lastItem?: boolean;
 }) => {
-  const formattedAmount = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: item?.article?.active_selling_price?.price?.currency,
-  }).format(item?.article?.active_selling_price?.price?.amount || 0);
+  let cur = item?.article?.active_selling_price?.price?.currency;
+  let amt = item?.article?.active_selling_price?.price?.amount
+  
 
   return (
     <View style={styles.MainListContainer}>
       <View style={styles.listContainer}>
         {!lastItem && (
-          <Text style={[styles.textStyle, { flex: 0.1 }]}>{item.quantity}</Text>
+          <Text style={[styles.textStyle, { flex: 0.1 }]}>{item?.quantity}</Text>
         )}
         <Text style={[styles.textStyle, { flex: lastItem? 0.7 :0.6 }, lastItem && { textAlign: 'left', paddingLeft: 8}]}>
           {item?.article?.description}
         </Text>
-        <Text style={[styles.textStyle, { flex: 0.3 }]}>{formattedAmount}</Text>
+        {(cur && amt) && <Text style={[styles.textStyle, { flex: 0.3 }]}>{formattedAmount(cur, amt)}</Text>}
       </View>
       <View style={styles.divider} />
     </View>
